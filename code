@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int maxn=1e4+10;
+const int maxv=1e5+10; 
+int w[maxn], c[maxn], dp[maxv];
+int main(){
+	int n, V;
+	int i, v, max;
+	scanf("%d %d", &n, &V);
+	for(i = 0; i < n; i++){
+		scanf("%d", &w[i]);
+	}
+	for(i = 0; i < n; i++){
+		scanf("%d", &c[i]);
+	}
+	// 边界
+	for(v = 0; v <= V; v++){
+		dp[v] = 0;
+	}
+	for(i = 0; i < n; i++){
+		cout<<"i="<<i<<endl; 
+		
+		for(v = V; v >= w[i]; v--){
+			
+			// 状态转移方程
+//			dp[v] = max(dp[v], dp[v-w[i]]+c[i]);
+			if(dp[v]<dp[v-w[i]]+c[i])dp[v]=dp[v-w[i]]+c[i];
+
+		}
+	}
+	// 寻找dp[0...V]中的最大即为答案
+	max = 0;
+	for(v = 0; v <= V; v++){
+		if(dp[v] > max)
+			max = dp[v];
+	}
+	printf("%d\n", max);
+	return 0;
+}
